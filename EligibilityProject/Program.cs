@@ -83,6 +83,7 @@ namespace CSharpEligibilityProject
                         Console.WriteLine(" Error: Invalid Choice");
                         System.Threading.Thread.Sleep(1000);
                         break;
+                        //test
                 }
 
             } while (userInput != 3);
