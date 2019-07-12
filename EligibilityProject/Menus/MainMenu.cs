@@ -12,7 +12,8 @@ namespace EligibilityProject.Menus
 {
     class MainMenu
     {
-
+        static PovertyData[] PovertyRates;
+        //PovertyRates = GetPovertyData();
         private static int DisplayMenu()
         {
             Console.Clear();
@@ -117,7 +118,28 @@ namespace EligibilityProject.Menus
             returnValue = PovertyRates.FirstOrDefault(x => x.LouMsaZip == Zip)?.PovertyRate; //find the first value or the default value
             return returnValue; 
         }
-        public static List<Applicant> RetrieveApplicantInfo()
+
+        //query PovertyRateByZip csv file using FileHelpers nuget package. Shortens code needed to read the file.  Don't need foreach statement to iterate through file;
+        private static PovertyData[] GetPovertyData()
+        {
+            //try
+            //{
+
+            var engine = new FileHelperEngine<PovertyData>();
+            var results = engine.ReadFile("PovertyRateByZip.csv");
+
+            return results;
+
+            //}
+            //catch(Exception error)
+            //{
+            //    Console.WriteLine(error.Message);
+            //    Console.ReadKey();
+            //}
+
+            //return results; 
+        }
+            public static List<Applicant> RetrieveApplicantInfo()
         {
 
             var applicants = new List<Applicant>();

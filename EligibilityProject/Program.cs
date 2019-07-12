@@ -10,71 +10,27 @@ using Newtonsoft.Json;
 
 
 
+
 namespace CSharpEligibilityProject
 {
     class Program
     {
         static PovertyData[] PovertyRates;
 
-        private string _DataDirectory;
-        private string _DataFile = "";
+        private static string _DataDirectory = "C:\\Users\\Liz Fust\\source\\repos\\CSharpClassEligibilityProject\\EligibilityProject";
+        private static string _DataFile = "C:\\Users\\Liz Fust\\source\\repos\\CSharpClassEligibilityProject\\EligibilityProject\\Applicants.json";
+        
         static void Main(string[] args)
         {
             PovertyRates = GetPovertyData();
  
-            Run();
+            MainMenu.Run();
 
 
         }
 
+       
         
-        //query PovertyRateByZip csv file to get an array of the zip codes and their poverty rates (see in Main PovertyRates = GetPovertyRates();
-        private static PovertyData[] GetPovertyData()
-        {
-            //try
-            //{
-                //List<PovertyData> zipResults = new List<PovertyData>();
-                //populate results with stuff from csv file
-                
-                
-                var engine = new FileHelperEngine<PovertyData>();
-                var results = engine.ReadFile("PovertyRateByZip.csv");
-
-
-            //foreach (PovertyData result in results)
-            //{
-            //    string LouMsaZip = result.LouMsaZip;
-            //    string PovertyRate = result.PovertyRate;
-            //}
-
-            return results;
- 
-                        //if(zipResults.Any())
-                        //{
-                        //    foreach(var zip in zipResults)
-                        //    {
-                        //        string LouMsaZip = zip.LouMsaZip;
-                        //        string PovertyRate = zip.PovertyRate;
-                        //    }
-
-                        //}
-                
-            //}
-            //catch(Exception error)
-            //{
-            //    Console.WriteLine(error.Message);
-            //    Console.ReadKey();
-            //}
-
-            //return results;   
-        }
-
-        //Use Linq to find the poverty rate of the zip code entered by user.  Remember in Main that PovertyRates = GetPovertyRates();
-        
-
-        //Get the applicant's information; retrieve poverty rate; determine eligibility (to have program determine eligibility, I'll need to have foundRecord be a double and pull only the poverty rate from the csv file, then use if/else statement to compare it to 27.7%.
-        
-
 
         //method to create ID number
         public static int GetId(List<Applicant> applicants)

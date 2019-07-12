@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEligibilityProject", "CSharpEligibilityProject.csproj", "{1134FAC5-C85E-42D3-91F2-31E558945D0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEligibilityProject.Services", "..\CSharpEligibilityProject.Services\CSharpEligibilityProject.Services.csproj", "{864AAB0F-7658-4184-A0E0-73EF47F64C38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1134FAC5-C85E-42D3-91F2-31E558945D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1134FAC5-C85E-42D3-91F2-31E558945D0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1134FAC5-C85E-42D3-91F2-31E558945D0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{864AAB0F-7658-4184-A0E0-73EF47F64C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{864AAB0F-7658-4184-A0E0-73EF47F64C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{864AAB0F-7658-4184-A0E0-73EF47F64C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{864AAB0F-7658-4184-A0E0-73EF47F64C38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
