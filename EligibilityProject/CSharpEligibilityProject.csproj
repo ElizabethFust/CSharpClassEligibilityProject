@@ -51,12 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Applicant.cs" />
     <Compile Include="Menus\ApplicantMenu.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PovertyData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -68,6 +66,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CSharpEligibilityProject.Models\CSharpEligibilityProject.Models.csproj">
+      <Project>{8163c1d1-fb55-42d4-8b36-d5733f8e8461}</Project>
+      <Name>CSharpEligibilityProject.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSharpEligibilityProject.Services\CSharpEligibilityProject.Services.csproj">
+      <Project>{864aab0f-7658-4184-a0e0-73ef47f64c38}</Project>
+      <Name>CSharpEligibilityProject.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,16 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using FileHelpers;
+using CSharpEligibilityProject.Menus;
 using CSharpEligibilityProject;
+using CSharpEligibilityProject.Services;
 using System.IO;
 
 namespace EligibilityProject.Menus
 {
     class MainMenu
     {
-        static PovertyData[] PovertyRates;
+        //static PovertyData[] PovertyRates;
         //PovertyRates = GetPovertyData();
-        private static int DisplayMenu()
+
+
+        public static int DisplayMenu()
         {
             Console.Clear();
             Console.Title = "Eligibility for Assistance";
@@ -27,19 +31,18 @@ namespace EligibilityProject.Menus
             Console.WriteLine(" 3. Exit");
             Console.WriteLine();
             Console.Write("Enter a number to proceed: ");
-            var result = Console.ReadLine();
-            var choice = Convert.ToInt32(result);
-            return choice;
 
+            //Handle if something other than number entered
+            var result = Console.ReadLine();
+
+            int.TryParse(result, out var choice);
+            return choice;
         }
 
         public static void Run()
         {
-            //create a var to hold the user's selection
             int userInput = 0;
 
-            //continue to loop until a valid
-            //number is chosen
 
             do
             {
@@ -47,14 +50,13 @@ namespace EligibilityProject.Menus
                 userInput = DisplayMenu();
 
 
-                //perform an action based on a selection
                 switch (userInput)
                 {
-                    case 1:
-                        GetApplicantInfo();
+                    case 1: //for a new Applicant; to get their information
+                        ApplicantMenu.AddApplicant();
                         break;
-                    case 2:
-                        RetrieveApplicantInfo();
+                    case 2: //for when an applicant returns; can look up their info using their ID#
+                        ApplicantService.RetrieveApplicantInfo();
                         //Remember to provide way for user to exit program again
                         break;
                     case 3:
@@ -72,87 +74,6 @@ namespace EligibilityProject.Menus
 
             } while (userInput != 3);
         }
-
-        public static Applicant GetApplicantInfo()
-        {
-            Applicant applicant = new Applicant();
-            Console.Clear();
-            Console.Write("Please enter your first name:\t");
-            applicant.FirstName = Console.ReadLine();
-            Console.Write("Please enter your last name:\t");
-            applicant.LastName = Console.ReadLine();
-            Console.Write("Please enter your zip code:\t");
-            applicant.ZipCode = Console.ReadLine();
-            var foundRecord = GetPovertyRate(applicant.ZipCode);
-
-            if (foundRecord == null)
-            {
-                HandleBadZip(applicant.ZipCode);
-            }
-
-            else
-            {
-                double povertyrate;
-
-                if (!double.TryParse(foundRecord, out povertyrate))
-                {
-                    throw new InvalidDataException("Can't parse poverty rate to double.  Poverty rate provided was " + foundRecord);
-                }
-
-                Console.WriteLine($"The poverty rate in your zip code is: {foundRecord}");
-            }
-
-            Console.WriteLine("If the poverty rate in your zipcode is greater than 27.7%, you are eligible for assistance");
-            Console.ReadKey();
-            return applicant;
-        }
-
-        private static void HandleBadZip(string zipCode)
-        {
-            Console.WriteLine("HandleBadZip needs to be implemented");
-        }
-
-        private static string GetPovertyRate(string Zip)
-        {
-            string returnValue;
-            returnValue = PovertyRates.FirstOrDefault(x => x.LouMsaZip == Zip)?.PovertyRate; //find the first value or the default value
-            return returnValue; 
-        }
-
-        //query PovertyRateByZip csv file using FileHelpers nuget package. Shortens code needed to read the file.  Don't need foreach statement to iterate through file;
-        private static PovertyData[] GetPovertyData()
-        {
-            //try
-            //{
-
-            var engine = new FileHelperEngine<PovertyData>();
-            var results = engine.ReadFile("PovertyRateByZip.csv");
-
-            return results;
-
-            //}
-            //catch(Exception error)
-            //{
-            //    Console.WriteLine(error.Message);
-            //    Console.ReadKey();
-            //}
-
-            //return results; 
-        }
-            public static List<Applicant> RetrieveApplicantInfo()
-        {
-
-            var applicants = new List<Applicant>();
-            var serializer = new JsonSerializer();
-            List<Applicant> RetrieveApplicantInfo = new List<Applicant>();
-
-            Console.Clear();
-            Console.WriteLine("Please enter your ID:\t");
-            //applicantId = Console.ReadLine();
-            Console.WriteLine(applicants);
-            return applicants;
-
-        }
-
     }
 }
+

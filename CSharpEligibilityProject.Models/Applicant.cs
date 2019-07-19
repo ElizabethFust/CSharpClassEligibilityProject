@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 
 namespace CSharpEligibilityProject
 {
-    class Applicant
+    public class Applicant
     {
 
-        //Create FirstName property
-
         public string FirstName { get; set; }
-
-        //Create LasName property
 
         public string LastName { get; set; }
 
@@ -24,7 +20,8 @@ namespace CSharpEligibilityProject
 
         public double PovertyRate { get; set; }
 
-        //Email property????  Get email from user????
+        public static List<Applicant> _applicantList { get; set; }
 
     }
 }
+

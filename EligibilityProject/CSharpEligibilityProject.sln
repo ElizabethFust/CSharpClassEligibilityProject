@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEligibilityProject", "CSharpEligibilityProject.csproj", "{1134FAC5-C85E-42D3-91F2-31E558945D0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEligibilityProject.Services", "..\CSharpEligibilityProject.Services\CSharpEligibilityProject.Services.csproj", "{864AAB0F-7658-4184-A0E0-73EF47F64C38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpEligibilityProject.Services", "..\CSharpEligibilityProject.Services\CSharpEligibilityProject.Services.csproj", "{864AAB0F-7658-4184-A0E0-73EF47F64C38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEligibilityProject.Models", "..\CSharpEligibilityProject.Models\CSharpEligibilityProject.Models.csproj", "{8163C1D1-FB55-42D4-8B36-D5733F8E8461}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{864AAB0F-7658-4184-A0E0-73EF47F64C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{864AAB0F-7658-4184-A0E0-73EF47F64C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{864AAB0F-7658-4184-A0E0-73EF47F64C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8163C1D1-FB55-42D4-8B36-D5733F8E8461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8163C1D1-FB55-42D4-8B36-D5733F8E8461}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8163C1D1-FB55-42D4-8B36-D5733F8E8461}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8163C1D1-FB55-42D4-8B36-D5733F8E8461}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
