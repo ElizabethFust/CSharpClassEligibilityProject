@@ -14,8 +14,8 @@ namespace CSharpEligibilityProject.Menus
     {
         
         //private static string _DataDirectory = "C:\\Users\\Liz Fust\\source\\repos\\C:\\Users\\Liz Fust\\source\\repos\\CSharpClassEligibilityProject\\EligibilityProject";
-        private static string _DataFile = "C:\\Users\\Liz Fust\\source\\repos\\CSharpClassEligibilityProject\\EligibilityProject\\Applicants.json";
-        static PovertyData[] PovertyRates;
+        //private static string _DataFile = "C:\\Users\\Liz Fust\\source\\repos\\CSharpClassEligibilityProject\\EligibilityProject\\Applicants.json";
+        //static PovertyData[] PovertyRates;
 
 
         public static void AddApplicant()
@@ -34,7 +34,7 @@ namespace CSharpEligibilityProject.Menus
             ApplicantService.GetPRateFromZip(applicant, applicants);
 
             ApplicantService.SaveApplicant(applicant, applicants);
-            //applicants = GetApplicantsFromFile();
+
             applicants.Add(applicant);
 
             System.Threading.Thread.Sleep(1000);

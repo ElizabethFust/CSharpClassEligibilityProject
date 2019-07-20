@@ -32,7 +32,6 @@ namespace EligibilityProject.Menus
             Console.WriteLine();
             Console.Write("Enter a number to proceed: ");
 
-            //Handle if something other than number entered
             var result = Console.ReadLine();
 
             int.TryParse(result, out var choice);

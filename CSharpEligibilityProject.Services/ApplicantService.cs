@@ -118,7 +118,9 @@ namespace CSharpEligibilityProject.Services
                         File.WriteAllText(_DataFile, jsonData);
 
                         Console.WriteLine("Your information has been saved");
-
+                        Console.WriteLine();
+                        Console.WriteLine("Press any key to return to the Main Menu.");
+                        Console.ReadKey();
                     }
                 }
                 catch (Exception ex)
@@ -194,27 +196,32 @@ namespace CSharpEligibilityProject.Services
             applicant.ApplicantId = Convert.ToInt32(result);
             _applicantList = GetApplicantsFromFile();
 
-
             var appToShow = _applicantList.SingleOrDefault(a => a.ApplicantId == applicant.ApplicantId);
             if (appToShow != null)
             {
                 Console.Write($"\nApplicant ID: {appToShow.ApplicantId} \nApplicant's first name: {appToShow.FirstName} \nApplicant's last name: {appToShow.LastName} \nApplicant's zip code:  {appToShow.ZipCode} \nPoverty rate of applicant's zip code: {appToShow.PovertyRate} ");
                 Console.WriteLine();
+
                 Console.WriteLine("\nTo return to the Main Menu, press enter.  To change your zip code press z.");
                 var userinput = Console.ReadLine();
+
                 if (userinput.ToLower() == "z")
                 {
-                   
-                    Console.Write("\nPlease enter the new zip code:\t");
-                    var newZip = Console.ReadLine();
-                    var newAppInfo = _applicantList.First(i => i.ZipCode == appToShow.ZipCode);
 
-                    File.WriteAllText("Path", File.ReadAllText("Path").Replace("SearchString", "Replacement"));
+                    Console.WriteLine($"Your current zip code is:  {appToShow.ZipCode}");
+                    Console.Write("\nPlease enter the new zip code:\t");
+
+                    var newZip = Console.ReadLine();
+                    var index = _applicantList.IndexOf(appToShow.ZipCode);
+                    _applicantList.Remove(appToShow.ZipCode);
+                    _applicantList.Insert(index, newZip);
 
                     //_applicantList [_applicantList.FindIndex(i => i.Equals(appToShow.ZipCode))] = newZip;
 
-                    //Edit();
+                    Console.WriteLine("Your new zip code has been saved.");           
+                    Console.WriteLine("Press any key to return to the Main Menu.");
                     Console.ReadKey();
+
                 }
 
                 else
@@ -232,42 +239,80 @@ namespace CSharpEligibilityProject.Services
 
         }
 
-        public static void Edit()
+        private static void Edit(string originalFile, string outputFile, string searchTerm, string replaceTerm)
         {
-            Applicant applicant = new Applicant();
-            List<Applicant> applicants = new List<Applicant>();
+            string tempLineValue;
             
-            var oldZip = applicant.ZipCode;
-            Console.Write("\nPlease enter the new zip code:\t");
-            var newZip = Console.ReadLine();
-            GetPRateFromZip(applicant, applicants);
-            System.Threading.Thread.Sleep(2000);
-            var newPR = 
-            var oldPR = 
-            var appNewPovRate = applicant.PovertyRate(oldPR, newPR);
-            var appNewZip = applicant.ZipCode.Replace(oldZip, newZip);
+            using (FileStream inputStream = File.OpenRead(originalFile))
+            {
+                using (StreamReader inputReader = new StreamReader(inputStream))
+                {
+                    using  (StreamWriter outputWriter = File.AppendText(outputFile))
+                    {
+                        while (null != (tempLineValue = inputReader.ReadLine()))
+                        {
+                            outputWriter.WriteLine(tempLineValue.Replace(searchTerm, replaceTerm));
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void SaveNewZip(Applicant applicant, List<Applicant> applicants)
+        {
             try
             {
-
                 string jsonData = JsonConvert.SerializeObject(applicants);
-
 
                 if (!string.IsNullOrEmpty(jsonData))
                 {
-
                     File.WriteAllText(_DataFile, jsonData);
-
-                    Console.WriteLine("Your information has been saved");
-
                 }
             }
             catch (Exception ex)
             {
-                ex.Data.Add("SaveError", $"An error occurred while trying to save to list.");
+                ex.Data.Add("SaveError",
+                    $"An error occurred while trying to save the list.");
                 throw;
             }
-
         }
+
+        //public static void Edit()
+        //{
+        //    Applicant applicant = new Applicant();
+        //    List<Applicant> applicants = new List<Applicant>();
+
+        //    var oldZip = applicant.ZipCode;
+        //    Console.Write("\nPlease enter the new zip code:\t");
+        //    var newZip = Console.ReadLine();
+        //    GetPRateFromZip(applicant, applicants);
+        //    System.Threading.Thread.Sleep(2000);
+        //    var newPR = 
+        //    var oldPR = 
+        //    var appNewPovRate = applicant.PovertyRate(oldPR, newPR);
+        //    var appNewZip = applicant.ZipCode.Replace(oldZip, newZip);
+        //    try
+        //    {
+
+        //        string jsonData = JsonConvert.SerializeObject(applicants);
+
+
+        //        if (!string.IsNullOrEmpty(jsonData))
+        //        {
+
+        //            File.WriteAllText(_DataFile, jsonData);
+
+        //            Console.WriteLine("Your information has been saved");
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ex.Data.Add("SaveError", $"An error occurred while trying to save to list.");
+        //        throw;
+        //    }
+
+        //}
 
 
     }
