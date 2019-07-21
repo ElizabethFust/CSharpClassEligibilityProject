@@ -1,1 +1,1 @@
-[{"FirstName":"Elizabeth","LastName":"Fust","ApplicantId":1,"ZipCode":"40206","PovertyRate":11.89},{"FirstName":"Mary","LastName":"Smith","ApplicantId":2,"ZipCode":"40218","PovertyRate":18.35},{"FirstName":"Jackson","LastName":"Conner","ApplicantId":3,"ZipCode":"40207","PovertyRate":7.56}]
+[{"FirstName":"Elizabeth","LastName":"Fust","ApplicantId":1,"ZipCode":"40202","PovertyRate":45.67},{"FirstName":"Mary","LastName":"Smith","ApplicantId":2,"ZipCode":"40218","PovertyRate":18.35},{"FirstName":"John","LastName":"Jackson","ApplicantId":3,"ZipCode":"40209","PovertyRate":61.95}]

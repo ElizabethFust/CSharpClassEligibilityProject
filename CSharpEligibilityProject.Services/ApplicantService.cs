@@ -83,7 +83,10 @@ namespace CSharpEligibilityProject.Services
 
         private static void HandleBadZip(string zipCode)
         {
-            Console.WriteLine("HandleBadZip needs to be implemented");
+
+            Console.WriteLine("To be eligible for assistance, your zip code must be a five-digit code within the Louisville Metropolitan Statistical Area.");
+            Console.WriteLine("Please enter a valid zip code.");
+            Console.ReadKey();
         }
 
         private static string GetPovertyRate(string Zip)
@@ -208,17 +211,33 @@ namespace CSharpEligibilityProject.Services
                 if (userinput.ToLower() == "z")
                 {
 
-                    Console.WriteLine($"Your current zip code is:  {appToShow.ZipCode}");
+                    var oldZip = appToShow.ZipCode;
+                    Console.WriteLine($"Your current zip code is:  {oldZip}");
                     Console.Write("\nPlease enter the new zip code:\t");
+                    appToShow.ZipCode = Console.ReadLine();
+                    var newPR = GetPovertyRate(appToShow.ZipCode);
+                    if (newPR == null)
+                    {
+                        HandleBadZip(applicant.ZipCode);
+                    }
 
-                    var newZip = Console.ReadLine();
-                    var index = _applicantList.IndexOf(appToShow.ZipCode);
-                    _applicantList.Remove(appToShow.ZipCode);
-                    _applicantList.Insert(index, newZip);
+                    else
+                    {
+                        double povertyrate;
 
-                    //_applicantList [_applicantList.FindIndex(i => i.Equals(appToShow.ZipCode))] = newZip;
+                        if (!double.TryParse(newPR, out povertyrate))
+                        {
+                            throw new InvalidDataException("Can't parse poverty rate to double.  Poverty rate provided was " + newPR);
 
-                    Console.WriteLine("Your new zip code has been saved.");           
+                        }
+                        appToShow.PovertyRate = povertyrate;
+                        Console.WriteLine($"The poverty rate in your zip code is: {newPR}");
+
+                    }
+
+                    Console.WriteLine("If the poverty rate in your zipcode is greater than 27.7%, you are eligible for assistance");
+                    SaveNewInfo(_applicantList);
+                    Console.WriteLine($"Your new zip code, {appToShow.ZipCode}, and your new poverty rate, {newPR}, have been saved.");
                     Console.WriteLine("Press any key to return to the Main Menu.");
                     Console.ReadKey();
 
@@ -239,26 +258,43 @@ namespace CSharpEligibilityProject.Services
 
         }
 
-        private static void Edit(string originalFile, string outputFile, string searchTerm, string replaceTerm)
+        public static void Edit()
         {
-            string tempLineValue;
-            
-            using (FileStream inputStream = File.OpenRead(originalFile))
-            {
-                using (StreamReader inputReader = new StreamReader(inputStream))
-                {
-                    using  (StreamWriter outputWriter = File.AppendText(outputFile))
-                    {
-                        while (null != (tempLineValue = inputReader.ReadLine()))
-                        {
-                            outputWriter.WriteLine(tempLineValue.Replace(searchTerm, replaceTerm));
-                        }
-                    }
-                }
-            }
+            Applicant appToShow = new Applicant();
+            Applicant applicant = new Applicant();
+            List<Applicant> _applicantList = new List<Applicant>();
+            //var oldZip = appToShow.ZipCode;
+            //Console.WriteLine($"Your current zip code is:  {oldZip}");
+            //Console.Write("\nPlease enter the new zip code:\t");
+            //appToShow.ZipCode = Console.ReadLine();
+            //var newPR = GetPovertyRate(appToShow.ZipCode);
+            //if (newPR == null)
+            //{
+            //    HandleBadZip(applicant.ZipCode);
+            //}
+
+            //else
+            //{
+            //    double povertyrate;
+
+            //    if (!double.TryParse(newPR, out povertyrate))
+            //    {
+            //        throw new InvalidDataException("Can't parse poverty rate to double.  Poverty rate provided was " + newPR);
+
+            //    }
+            //    appToShow.PovertyRate = povertyrate;
+            //    Console.WriteLine($"The poverty rate in your zip code is: {newPR}");
+
+            //}
+
+            //Console.WriteLine("If the poverty rate in your zipcode is greater than 27.7%, you are eligible for assistance");
+            //SaveNewInfo(_applicantList);
+            //Console.WriteLine($"Your new zip code, {appToShow.ZipCode}, and your new poverty rate, {newPR}, have been saved.");
+            //Console.WriteLine("Press any key to return to the Main Menu.");
+            //Console.ReadKey();
         }
 
-        public static void SaveNewZip(Applicant applicant, List<Applicant> applicants)
+        public static void SaveNewInfo(List<Applicant> applicants)
         {
             try
             {
@@ -276,44 +312,6 @@ namespace CSharpEligibilityProject.Services
                 throw;
             }
         }
-
-        //public static void Edit()
-        //{
-        //    Applicant applicant = new Applicant();
-        //    List<Applicant> applicants = new List<Applicant>();
-
-        //    var oldZip = applicant.ZipCode;
-        //    Console.Write("\nPlease enter the new zip code:\t");
-        //    var newZip = Console.ReadLine();
-        //    GetPRateFromZip(applicant, applicants);
-        //    System.Threading.Thread.Sleep(2000);
-        //    var newPR = 
-        //    var oldPR = 
-        //    var appNewPovRate = applicant.PovertyRate(oldPR, newPR);
-        //    var appNewZip = applicant.ZipCode.Replace(oldZip, newZip);
-        //    try
-        //    {
-
-        //        string jsonData = JsonConvert.SerializeObject(applicants);
-
-
-        //        if (!string.IsNullOrEmpty(jsonData))
-        //        {
-
-        //            File.WriteAllText(_DataFile, jsonData);
-
-        //            Console.WriteLine("Your information has been saved");
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ex.Data.Add("SaveError", $"An error occurred while trying to save to list.");
-        //        throw;
-        //    }
-
-        //}
-
 
     }
 }

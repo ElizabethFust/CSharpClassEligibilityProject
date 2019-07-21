@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.IO;
 using FileHelpers;
 using CSharpEligibilityProject.Services;
+using System.Text.RegularExpressions;
 
 namespace CSharpEligibilityProject.Menus
 {
@@ -26,8 +27,24 @@ namespace CSharpEligibilityProject.Menus
             Console.Clear();
             Console.Write("Please enter your first name:\t");
             applicant.FirstName = Console.ReadLine();
-            Console.Write("\nPlease enter your last name:\t");
+
+                while (!Regex.Match(applicant.FirstName, "^[A-Z][a-zA-Z]*$").Success)
+                {
+                    Console.WriteLine("Please enter a valid name:\t");
+                    applicant.FirstName = Console.ReadLine();
+
+                }
+                Console.Write("Please enter your last name:\t");
+
             applicant.LastName = Console.ReadLine();
+
+                while (!Regex.Match(applicant.LastName, "^[A-Z][a-zA-Z]*$").Success)
+                {
+                    Console.WriteLine("Please enter a valid name:\t");
+                    applicant.LastName = Console.ReadLine();
+
+                }
+
             Console.Write("\nPlease enter your zip code:\t");
             applicant.ZipCode = Console.ReadLine();
 
