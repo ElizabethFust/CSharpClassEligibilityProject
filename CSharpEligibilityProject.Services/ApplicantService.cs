@@ -195,8 +195,19 @@ namespace CSharpEligibilityProject.Services
             List<Applicant> _applicantList;
             Console.Clear();
             Console.Write("Please enter your ID number:\t");
-            var result = Console.ReadLine();
-            applicant.ApplicantId = Convert.ToInt32(result);
+            var input = Console.ReadLine();
+            int num = -1;
+            if (!int.TryParse(input, out num))
+            {
+                Console.WriteLine("invalid ID");
+                Console.WriteLine("Please enter your ID number:\t");
+                Console.ReadKey();
+            }
+            else
+            {
+                applicant.ApplicantId = num;
+            }
+
             _applicantList = GetApplicantsFromFile();
 
             var appToShow = _applicantList.SingleOrDefault(a => a.ApplicantId == applicant.ApplicantId);
@@ -253,7 +264,7 @@ namespace CSharpEligibilityProject.Services
             {
 
                 Console.Write($"ERROR: Could not find player with ID: {applicant.ApplicantId}.");
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(2000);
             }
 
         }
