@@ -45,7 +45,15 @@ namespace CSharpEligibilityProject.Menus
 
                 }
 
-            Console.Write("\nPlease enter your zip code:\t");
+            Console.Write("\nPlease enter your zip code.\t");
+            Console.WriteLine();
+            Console.Write("\nThe zip code should be one of the following:");
+            Console.WriteLine();
+            
+            ApplicantService.ShowZips();
+            Console.WriteLine();
+            Console.Write("Enter Zip:  ");
+
             applicant.ZipCode = Console.ReadLine();
 
             ApplicantService.GetPRateFromZip(applicant, applicants);
