@@ -12,14 +12,15 @@ namespace CSharpEligibilityProject.Services
 {
     public class ApplicantService
     {
+                
+        public static string currentDirectory = Directory.GetCurrentDirectory();
+        public static DirectoryInfo directory = new DirectoryInfo(currentDirectory);
 
-        private static string _DataDirectory = "C:\\Users\\Liz Fust\\source\\repos\\CSharpClassEligibilityProject\\EligibilityProject";
-        private static string _DataFile = "C:\\Users\\Liz Fust\\source\\repos\\CSharpClassEligibilityProject\\EligibilityProject\\Applicants.json";
+        private static string _DataFile = Path.Combine(directory.FullName, "Applicants.json");
+        public static string FileName = Path.Combine(directory.FullName, "PovertyRateByZip.csv");
         static PovertyData[] PovertyRates;
-        public static string FileName = "C:\\Users\\Liz Fust\\source\\repos\\CSharpClassEligibilityProject\\EligibilityProject\\PovertyRateByZip.csv";
 
-
-    //Beginning of Methods referenced in ApplicantMenu (to implement choice 1 -- new applicant)
+        //Beginning of Methods referenced in ApplicantMenu (to implement choice 1 -- new applicant)
         public static List<Applicant> GetApplicantsFromFile()
         {
             List<Applicant> returnValue = new List<Applicant>();
@@ -58,13 +59,7 @@ namespace CSharpEligibilityProject.Services
         {
             var foundRecord = GetPovertyRate(applicant.ZipCode);
 
-            while (foundRecord == null)
-            {
-                HandleBadZip(applicant.ZipCode);
-                
-            }
-
-                double povertyrate;
+            double povertyrate;
 
                 if (!double.TryParse(foundRecord, out povertyrate))
                 {
@@ -81,14 +76,14 @@ namespace CSharpEligibilityProject.Services
 
         }
 
-        private static void HandleBadZip(string zipCode)
-        {
+        //private static void HandleBadZip(Applicant applicant, string Zip)
+        //{
+        //    var foundRecord = FindZip(applicant.ZipCode);
+        //    if(foundRecord == null)
+        //    {
 
-            Console.WriteLine("To be eligible for assistance, your zip code must be a five-digit code \nwithin the Louisville Metropolitan Statistical Area.");
-            Console.WriteLine("\nPlease enter one of the following zip codes:");
-
-
-        }
+        //    }
+        //}
 
         public static void ShowZips()
         {
@@ -105,8 +100,14 @@ namespace CSharpEligibilityProject.Services
         }
 
 
-
-        private static string GetPovertyRate(string Zip)
+        public static string FindZip(string ZipCode)
+        {
+            var zipCodes = GetPovertyData();
+            string returnValue;
+            returnValue = zipCodes.FirstOrDefault(x => x.LouMsaZip == ZipCode)?.LouMsaZip; //find the first value or show the default value. ?. is null-conditional--show poverty rate if not null.
+            return returnValue;
+        }
+        public static string GetPovertyRate(string Zip)
         {
             PovertyRates = GetPovertyData();
             string returnValue;
@@ -205,6 +206,13 @@ namespace CSharpEligibilityProject.Services
 
             //return results;
         }
+
+        //public static PovertyData[] GetZipData()
+        //{
+        //    var engine = new FileHelperEngine<PovertyData>();
+        //    var results = engine.ReadFile("PovertyRateByZip.csv");
+        //    return results;
+        //}
         public static void RetrieveApplicantInfo()
         {
             Applicant applicant = new Applicant();
@@ -246,7 +254,10 @@ namespace CSharpEligibilityProject.Services
                     var newPR = GetPovertyRate(appToShow.ZipCode);
                     if (newPR == null)
                     {
-                        HandleBadZip(applicant.ZipCode);
+                        Console.WriteLine("To be eligible for assistance, your zip code must be a five-digit code \nwithin the Louisville Metropolitan Statistical Area.");
+                        ShowZips();
+                        Console.WriteLine();
+                        Console.Write("Please enter a valid zip code:  "); 
                     }
 
                     else
@@ -265,7 +276,7 @@ namespace CSharpEligibilityProject.Services
 
                     Console.WriteLine("If the poverty rate in your zipcode is greater than 27.7%, you are eligible for assistance");
                     SaveNewInfo(_applicantList);
-                    Console.WriteLine($"Your new zip code, {appToShow.ZipCode}, and your new poverty rate, {newPR}, have been saved.");
+                    //Console.WriteLine($"Your new zip code, {appToShow.ZipCode}, and your new poverty rate, {newPR}, have been saved.");
                     Console.WriteLine("Press any key to return to the Main Menu.");
                     Console.ReadKey();
 

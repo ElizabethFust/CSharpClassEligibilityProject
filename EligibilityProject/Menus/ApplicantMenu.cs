@@ -14,10 +14,6 @@ namespace CSharpEligibilityProject.Menus
     class ApplicantMenu
     {
         
-        //private static string _DataDirectory = "C:\\Users\\Liz Fust\\source\\repos\\C:\\Users\\Liz Fust\\source\\repos\\CSharpClassEligibilityProject\\EligibilityProject";
-        //private static string _DataFile = "C:\\Users\\Liz Fust\\source\\repos\\CSharpClassEligibilityProject\\EligibilityProject\\Applicants.json";
-        //static PovertyData[] PovertyRates;
-
 
         public static void AddApplicant()
         {
@@ -30,33 +26,48 @@ namespace CSharpEligibilityProject.Menus
 
                 while (!Regex.Match(applicant.FirstName, "^[A-Z][a-zA-Z]*$").Success)
                 {
-                    Console.WriteLine("Please enter a valid name:\t");
+                    Console.Write("Please enter a valid name:\t");
                     applicant.FirstName = Console.ReadLine();
 
                 }
-                Console.Write("Please enter your last name:\t");
+                Console.Write("\nPlease enter your last name:\t");
 
             applicant.LastName = Console.ReadLine();
 
                 while (!Regex.Match(applicant.LastName, "^[A-Z][a-zA-Z]*$").Success)
                 {
-                    Console.WriteLine("Please enter a valid name:\t");
+                    Console.Write("Please enter a valid name:\t");
                     applicant.LastName = Console.ReadLine();
 
                 }
 
-            Console.Write("\nPlease enter your zip code.\t");
-            Console.WriteLine();
-            Console.Write("\nThe zip code should be one of the following:");
-            Console.WriteLine();
-            
-            ApplicantService.ShowZips();
-            Console.WriteLine();
-            Console.Write("Enter Zip:  ");
+            Console.Write("\nTo be eligible for assistance, your zip code must be in the Louisville Metropolitan Statistical Area.\t");
+            //Console.WriteLine();
+            //Console.Write("\nThe zip code should be one of the following:");
+            //Console.WriteLine();
 
+            //ApplicantService.ShowZips();
+
+            //Console.ReadLine();
+
+            Console.WriteLine();
+            Console.Write("\nPlease Enter your zip code:  ");
             applicant.ZipCode = Console.ReadLine();
-
+                
+                while (ApplicantService.FindZip(applicant.ZipCode) == null)
+                {
+                    Console.Write("You have entered an ineligible zip code.");
+                    Console.WriteLine();
+                    Console.Write("The zip code must be one of the following:");
+                    Console.WriteLine();
+                    ApplicantService.ShowZips();
+                    Console.WriteLine();
+                    Console.Write("Please enter a zip code from the Louisville MSA:  ");
+                    applicant.ZipCode = Console.ReadLine();
+                }
+            
             ApplicantService.GetPRateFromZip(applicant, applicants);
+                
 
             ApplicantService.SaveApplicant(applicant, applicants);
 
