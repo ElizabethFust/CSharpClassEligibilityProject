@@ -76,15 +76,6 @@ namespace CSharpEligibilityProject.Services
 
         }
 
-        //private static void HandleBadZip(Applicant applicant, string Zip)
-        //{
-        //    var foundRecord = FindZip(applicant.ZipCode);
-        //    if(foundRecord == null)
-        //    {
-
-        //    }
-        //}
-
         public static void ShowZips()
         {
             var engine = new FileHelperEngine<PovertyData>();
@@ -188,31 +179,14 @@ namespace CSharpEligibilityProject.Services
         //query PovertyRateByZip csv file using FileHelpers nuget package. Shortens code needed to read the file.  Don't need foreach statement to iterate through file;
         public static PovertyData[] GetPovertyData()
         {
-            //PovertyData[] results = new PovertyData[];
-            //try
-            //{
-
+ 
             var engine = new FileHelperEngine<PovertyData>();
             var results = engine.ReadFile("PovertyRateByZip.csv");
 
             return results;
 
-            //}
-            //catch (Exception error)
-            //    {
-            //        Console.WriteLine(error.Message);
-            //        Console.ReadKey();
-            //    }
-
-            //return results;
         }
 
-        //public static PovertyData[] GetZipData()
-        //{
-        //    var engine = new FileHelperEngine<PovertyData>();
-        //    var results = engine.ReadFile("PovertyRateByZip.csv");
-        //    return results;
-        //}
         public static void RetrieveApplicantInfo()
         {
             Applicant applicant = new Applicant();
@@ -276,7 +250,7 @@ namespace CSharpEligibilityProject.Services
 
                     Console.WriteLine("If the poverty rate in your zipcode is greater than 27.7%, you are eligible for assistance");
                     SaveNewInfo(_applicantList);
-                    //Console.WriteLine($"Your new zip code, {appToShow.ZipCode}, and your new poverty rate, {newPR}, have been saved.");
+ 
                     Console.WriteLine("Press any key to return to the Main Menu.");
                     Console.ReadKey();
 

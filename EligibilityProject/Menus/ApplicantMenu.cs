@@ -42,14 +42,6 @@ namespace CSharpEligibilityProject.Menus
                 }
 
             Console.Write("\nTo be eligible for assistance, your zip code must be in the Louisville Metropolitan Statistical Area.\t");
-            //Console.WriteLine();
-            //Console.Write("\nThe zip code should be one of the following:");
-            //Console.WriteLine();
-
-            //ApplicantService.ShowZips();
-
-            //Console.ReadLine();
-
             Console.WriteLine();
             Console.Write("\nPlease Enter your zip code:  ");
             applicant.ZipCode = Console.ReadLine();
