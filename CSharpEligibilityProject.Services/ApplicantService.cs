@@ -69,13 +69,13 @@ namespace CSharpEligibilityProject.Services
                 applicant.PovertyRate = povertyrate;
                 Console.WriteLine($"The poverty rate in your zip code is: {foundRecord}");
                 Console.WriteLine("If the poverty rate in your zipcode is greater than 27.7%, you are eligible for assistance");
-            
-           
+          
 
             return applicants;
 
         }
 
+        //query PovertyRateByZip csv file using FileHelpers nuget package. Shortens code needed to read the file.  Don't need foreach statement to iterate through file;
         public static void ShowZips()
         {
             var engine = new FileHelperEngine<PovertyData>();
@@ -102,7 +102,7 @@ namespace CSharpEligibilityProject.Services
         {
             PovertyRates = GetPovertyData();
             string returnValue;
-            returnValue = PovertyRates.FirstOrDefault(x => x.LouMsaZip == Zip)?.PovertyRate; //find the first value or show the default value. ?. is null-conditional--show poverty rate if not null.
+            returnValue = PovertyRates.FirstOrDefault(x => x.LouMsaZip == Zip)?.PovertyRate; 
             return returnValue;
         }
 
@@ -196,16 +196,15 @@ namespace CSharpEligibilityProject.Services
             Console.Write("Please enter your ID number:\t");
             var input = Console.ReadLine();
             int num = -1;
-            if (!int.TryParse(input, out num))
+            while (!int.TryParse(input, out num))
             {
                 Console.WriteLine("invalid ID");
-                Console.WriteLine("Please enter your ID number:\t");
-                Console.ReadKey();
+                Console.Write("Please enter your ID number:\t");
+                input = Console.ReadLine();
+
             }
-            else
-            {
-                applicant.ApplicantId = num;
-            }
+
+            applicant.ApplicantId = num;
 
             _applicantList = GetApplicantsFromFile();
 
@@ -225,33 +224,37 @@ namespace CSharpEligibilityProject.Services
                     Console.WriteLine($"Your current zip code is:  {oldZip}");
                     Console.Write("\nPlease enter the new zip code:\t");
                     appToShow.ZipCode = Console.ReadLine();
-                    var newPR = GetPovertyRate(appToShow.ZipCode);
-                    if (newPR == null)
+                    while (FindZip(appToShow.ZipCode) == null)
                     {
-                        Console.WriteLine("To be eligible for assistance, your zip code must be a five-digit code \nwithin the Louisville Metropolitan Statistical Area.");
-                        ShowZips();
+                        Console.Write("You have entered an ineligible zip code.");
                         Console.WriteLine();
-                        Console.Write("Please enter a valid zip code:  "); 
+                        Console.Write("The zip code must be one of the following:");
+                        Console.WriteLine();
+                        ApplicantService.ShowZips();
+                        Console.WriteLine();
+                        Console.Write("Please enter a zip code from the Louisville MSA:  ");
+                        appToShow.ZipCode = Console.ReadLine();
                     }
+                   
+                    var newPR = GetPovertyRate(appToShow.ZipCode);
+                    double povertyrate;
 
-                    else
+                    if (!double.TryParse(newPR, out povertyrate))
                     {
-                        double povertyrate;
-
-                        if (!double.TryParse(newPR, out povertyrate))
-                        {
-                            throw new InvalidDataException("Can't parse poverty rate to double.  Poverty rate provided was " + newPR);
-
-                        }
-                        appToShow.PovertyRate = povertyrate;
-                        Console.WriteLine($"The poverty rate in your zip code is: {newPR}");
+                        throw new InvalidDataException("Can't parse poverty rate to double.  Poverty rate provided was " + newPR);
 
                     }
+                    appToShow.PovertyRate = povertyrate;
+                    Console.WriteLine($"The poverty rate in your zip code is: {newPR}");
 
-                    Console.WriteLine("If the poverty rate in your zipcode is greater than 27.7%, you are eligible for assistance");
+                    //}
+
+                    Console.WriteLine("\nIf the poverty rate in your zipcode is greater than 27.7%, you are eligible for assistance.");
                     SaveNewInfo(_applicantList);
- 
-                    Console.WriteLine("Press any key to return to the Main Menu.");
+
+                    Console.Write($"\nYour new zip code, {appToShow.ZipCode}, and poverty rate, {appToShow.PovertyRate}, have been saved.");
+                    Console.WriteLine();
+                    Console.WriteLine("\nPress any key to return to the Main Menu.");
                     Console.ReadKey();
 
                 }
